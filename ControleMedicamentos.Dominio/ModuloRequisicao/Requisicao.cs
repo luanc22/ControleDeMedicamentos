@@ -29,6 +29,17 @@ namespace ControleMedicamentos.Dominio.ModuloRequisicao
         public DateTime Data { get; set; }
         public Funcionario Funcionario { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Requisicao requisicao &&
+                   id == requisicao.id &&
+                   EqualityComparer<Medicamento>.Default.Equals(Medicamento, requisicao.Medicamento) &&
+                   EqualityComparer<Paciente>.Default.Equals(Paciente, requisicao.Paciente) &&
+                   QtdMedicamento == requisicao.QtdMedicamento &&
+                   Data == requisicao.Data &&
+                   EqualityComparer<Funcionario>.Default.Equals(Funcionario, requisicao.Funcionario);
+        }
+
         public override string ToString()
         {
             return $"{id}{" - "}{Paciente.Nome}{" - "}{Medicamento.Nome}";

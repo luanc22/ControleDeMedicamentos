@@ -14,8 +14,17 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloPaciente
         {
             DataBase.ExecutarSql("DELETE FROM TBPACIENTE; DBCC CHECKIDENT (TBPACIENTE, RESEED, 0)");
 
-            paciente = new Paciente("José da Silva", "321654987");
+            paciente = gerarPaciente();
             repositorio = new RepositorioPacienteEmBancoDados();
+        }
+
+        public Paciente gerarPaciente()
+        {
+            Paciente paciente = new Paciente();
+            paciente.Nome = "Luan";
+            paciente.CartaoSUS = "1322131231";
+
+            return paciente;
         }
 
         [TestMethod]
@@ -38,8 +47,8 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloPaciente
             repositorio.Inserir(paciente);
 
             //action
-            paciente.Nome = "João de Moraes";
-            paciente.CartaoSUS = "987654321";
+            paciente.Nome = "Luan Cabral";
+            paciente.CartaoSUS = "132213123123";
             repositorio.Editar(paciente);
 
             //assert
@@ -81,25 +90,23 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloPaciente
         public void Deve_selecionar_todos_os_pacientes()
         {
             //arrange
-            var p01 = new Paciente("Alberto da Silva", "321654987");
-            var p02 = new Paciente("Maria do Carmo", "321654987");
-            var p03 = new Paciente("Patricia Amorim", "321654987");
+            var paciente1 = new Paciente("Anderson Silva", "1231321313");
+            var paciente2 = new Paciente("Jose Otavio", "32132132111");
+
 
             var repositorio = new RepositorioPacienteEmBancoDados();
-            repositorio.Inserir(p01);
-            repositorio.Inserir(p02);
-            repositorio.Inserir(p03);
+            repositorio.Inserir(paciente1);
+            repositorio.Inserir(paciente2);
 
             //action
             var pacientes = repositorio.SelecionarTodos();
 
             //assert
 
-            Assert.AreEqual(3, pacientes.Count);
+            Assert.AreEqual(2, pacientes.Count);
 
-            Assert.AreEqual(p01.Nome, pacientes[0].Nome);
-            Assert.AreEqual(p02.Nome, pacientes[1].Nome);
-            Assert.AreEqual(p03.Nome, pacientes[2].Nome);
+            Assert.AreEqual(paciente1.Nome, pacientes[0].Nome);
+            Assert.AreEqual(paciente2.Nome, pacientes[1].Nome);
         }
     }
 }

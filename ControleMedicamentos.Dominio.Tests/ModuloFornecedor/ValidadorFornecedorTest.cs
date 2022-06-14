@@ -155,7 +155,7 @@ namespace ControleMedicamentos.Dominio.Tests.ModuloFornecedor
         }
 
         [TestMethod]
-        public void Email_nao_deve_ser_nulo()
+]        public void Email_nao_deve_ser_nulo()
         {
             //arrange
             fornecedor.Nome = "Nome";

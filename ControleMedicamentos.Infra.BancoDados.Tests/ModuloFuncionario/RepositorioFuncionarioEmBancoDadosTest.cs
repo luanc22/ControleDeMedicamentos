@@ -19,8 +19,18 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFuncionario
         {
             DataBase.ExecutarSql("DELETE FROM TBFUNCIONARIO; DBCC CHECKIDENT (TBFUNCIONARIO, RESEED, 0)");
 
-            funcionario = new Funcionario("José da Silva", "jose.dasilva", "12345678");
+            funcionario = gerarFuncionario();
             repositorio = new RepositorioFuncionarioEmBancoDados();
+        }
+
+        public Funcionario gerarFuncionario()
+        {
+            Funcionario funcionario = new Funcionario();
+            funcionario.Login = "loginteste";
+            funcionario.Senha = "senhateste";
+            funcionario.Nome = "nometeste";
+
+            return funcionario;
         }
 
         [TestMethod]
@@ -43,9 +53,9 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFuncionario
             repositorio.Inserir(funcionario);
 
             //action
-            funcionario.Nome = "João de Moraes";
-            funcionario.Login = "joao.demorais";
-            funcionario.Senha = "00000000";
+            funcionario.Nome = "Nome Teste";
+            funcionario.Login = "login.teste";
+            funcionario.Senha = "senha.teste";
             repositorio.Editar(funcionario);
 
             //assert
@@ -87,25 +97,23 @@ namespace ControleMedicamentos.Infra.BancoDados.Tests.ModuloFuncionario
         public void Deve_selecionar_todos_os_funcionarios()
         {
             //arrange
-            var f0 = new Funcionario("Alberto da Silva", "alberto.dasilva" , "321654987");
-            var f1 = new Funcionario("Maria do Carmo", "maria.docarmo", "111111111");
-            var f2 = new Funcionario("Patricia Amorim", "patricia.amorin", "999999999");
+            var funcionario1 = new Funcionario("Nome Teste2", "login.teste2" , "senha.teste2");
+            var funcionario2 = new Funcionario("Nome Teste3", "login.teste3", "senha.teste3");
 
             var repositorio = new RepositorioFuncionarioEmBancoDados();
-            repositorio.Inserir(f0);
-            repositorio.Inserir(f1);
-            repositorio.Inserir(f2);
+            repositorio.Inserir(funcionario1);
+            repositorio.Inserir(funcionario2);
 
             //action
             var funcionarios = repositorio.SelecionarTodos();
 
             //assert
 
-            Assert.AreEqual(3, funcionarios.Count);
+            Assert.AreEqual(2, funcionarios.Count);
 
-            Assert.AreEqual(f0.Nome, funcionarios[0].Nome);
-            Assert.AreEqual(f1.Nome, funcionarios[1].Nome);
-            Assert.AreEqual(f2.Nome, funcionarios[2].Nome);
+            Assert.AreEqual(funcionario1.Nome, funcionarios[0].Nome);
+            Assert.AreEqual(funcionario2.Nome, funcionarios[1].Nome);
+ 
         }
     }
 }

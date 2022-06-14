@@ -113,7 +113,6 @@ namespace ControleMedicamento.Infra.BancoDados.ModuloMedicamento
 
             if (resultadoValidacao.IsValid == false)
             {
-                notificador.ApresentarMensagem(resultadoValidacao.ToString(), TipoMensagem.Atencao);
                 return resultadoValidacao;
             }
 

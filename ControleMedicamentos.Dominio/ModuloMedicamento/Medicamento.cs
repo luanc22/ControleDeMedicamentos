@@ -33,9 +33,22 @@ namespace ControleMedicamentos.Dominio.ModuloMedicamento
         {
         }
 
+
+
         public override string ToString()
         {
             return $"{id}{" - "}{Nome}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Medicamento medicamento &&
+                   id == medicamento.id &&
+                   Nome == medicamento.Nome &&
+                   Descricao == medicamento.Descricao &&
+                   Lote == medicamento.Lote &&
+                   Validade == medicamento.Validade &&
+                   QuantidadeDisponivel == medicamento.QuantidadeDisponivel;              
         }
     }
 }
